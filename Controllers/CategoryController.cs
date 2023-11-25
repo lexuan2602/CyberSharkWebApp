@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TEST_CRUD.DTO;
+using TEST_CRUD.DTO.CategoryDTO;
 using TEST_CRUD.Services;
 using TEST_CRUD.Services.Category;
 
@@ -11,22 +12,23 @@ namespace TEST_CRUD.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService CategoryService)
         {
-            _categoryService = categoryService;
+            _categoryService = CategoryService;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetCategoryList(string search = "", int page = 1)
+        public async Task<ActionResult<ServiceResponse<GetCategoryDTO>>> GetCategoryList(string search = "", int page = 1)
         {
             try
             {
                 var result = await _categoryService.GetList(search, page);
-                if (result != null)
+                if (result.Success)
                 {
                     return Ok(result);
                 }
-                return BadRequest();
+
+                return BadRequest(result.Message);
             }
             catch (Exception)
             {
@@ -35,16 +37,17 @@ namespace TEST_CRUD.Controllers
             }
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetSingle(int id)
+        public async Task<ActionResult<ServiceResponse<GetCategoryDto>>> GetSingle(int id)
         {
             try
             {
                 var result = await _categoryService.GetById(id);
-                if (result != null)
+                if (result.Success)
                 {
                     return Ok(result);
                 }
-                return BadRequest();
+
+                return BadRequest(result.Message);
             }
             catch (Exception)
             {
@@ -53,16 +56,17 @@ namespace TEST_CRUD.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> AddBrand(AddBrandDto brand)
+        public async Task<ActionResult<ServiceResponse<GetCategoryDto>>> AddCategory(AddCategoryDto category)
         {
             try
             {
-                var result = await _categoryService.Add(brand);
-                if (result != null)
+                var result = await _categoryService.Add(category);
+                if (result.Success)
                 {
                     return Ok(result);
                 }
-                return BadRequest();
+
+                return BadRequest(result.Message);
 
             }
             catch (Exception)
@@ -72,16 +76,17 @@ namespace TEST_CRUD.Controllers
             }
         }
         [HttpPut]
-        public async Task<ActionResult> UpdateCharacter(AddBrandDto updatedCharacter, int id)
+        public async Task<ActionResult<ServiceResponse<GetCategoryDto>>> UpdateCharacter(AddCategoryDto updatedCharacter, int id)
         {
             try
             {
                 var result = await _categoryService.Update(updatedCharacter, id);
-                if (result != null)
+                if (result.Success)
                 {
                     return Ok(result);
                 }
-                return BadRequest();
+
+                return BadRequest(result.Message);
 
             }
             catch (Exception)
@@ -92,15 +97,15 @@ namespace TEST_CRUD.Controllers
 
         }
         [HttpDelete]
-        public async Task<ActionResult> DeleteBrand(int brandId)
+        public async Task<ActionResult<ServiceResponse<GetCategoryDto>>> DeleteCategory(int categoryId)
         {
-            var result = await _categoryService.Delete(brandId);
-            if (result != null)
+            var result = await _categoryService.Delete(categoryId);
+            if (result.Success)
             {
-                return Ok("Record has been deleted");
+                return Ok(result);
             }
-            return BadRequest();
 
+            return BadRequest(result.Message);
 
         }
     }

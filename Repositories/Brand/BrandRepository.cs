@@ -46,7 +46,7 @@ namespace TEST_CRUD
 
             if (result != null)
             {
-                //result.Id = brand.Id;
+                
                 result.Name = brand.Name;
                 result.Brand_Image = brand.Brand_Image;
                 await appDbContext.SaveChangesAsync();
