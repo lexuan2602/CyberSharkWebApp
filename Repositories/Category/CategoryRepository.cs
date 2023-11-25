@@ -2,7 +2,9 @@
 using System;
 using TEST_CRUD.Data;
 using TEST_CRUD.DTO;
-namespace TEST_CRUD.Repositories.Category
+using TEST_CRUD.DTO.CategoryDTO;
+
+namespace TEST_CRUD
 {
     public class CategoryRepository : ICategoryRepository
     {
@@ -11,49 +13,50 @@ namespace TEST_CRUD.Repositories.Category
         {
             this.appDbContext = appDbContext;
         }
-        public async Task<IEnumerable<Brand?>> GetList(string search, int page)
+        public async Task<IEnumerable<Category?>> GetList(string search, int page)
         {
-            var brandList = appDbContext.Brand.AsQueryable();
+            var categoryList = appDbContext.Category.AsQueryable();
             //// Filter Items has been Deleted /////////////////////
-            brandList = brandList.Where(b => b.IsDeleted != true);
+            categoryList = categoryList.Where(b => b.IsDeleted != true);
 
             //////// Search /////////////////////////
             if (!string.IsNullOrEmpty(search))
             {
-                brandList = brandList.Where(b => b.Name == search);
+                categoryList = categoryList.Where(b => b.Name == search);
             }
             var pageResult = 2f;  // The number of items in a page
-            var pageCount = Math.Ceiling(brandList.Count() / pageResult); // The number of items
-            brandList = brandList.Skip((page - 1) * (int)pageResult).Take((int)pageResult);
-            return await brandList.ToListAsync();
+            var pageCount = Math.Ceiling(categoryList.Count() / pageResult); // The number of items
+            categoryList = categoryList.Skip((page - 1) * (int)pageResult).Take((int)pageResult);
+            return await categoryList.ToListAsync();
         }
-        public async Task<Brand> GetById(int id)
+        public async Task<Category> GetById(int id)
         {
-            return await appDbContext.Brand.FirstOrDefaultAsync(br => br.Id == id);
+            return await appDbContext.Category.Where(b => b.IsDeleted == false).FirstOrDefaultAsync(br => br.Id == id);
         }
-        public async Task<Brand> Add(Brand brand)
+        public async Task<Category> Add(Category category)
         {
-            var addBrand = await appDbContext.Brand.AddAsync(brand);
+            var addCategory = await appDbContext.Category.AddAsync(category);
             await appDbContext.SaveChangesAsync();
-            return addBrand.Entity;
+            return addCategory.Entity;
         }
-        public async Task<Brand> Update(AddBrandDto brand, int Id)
+        public async Task<Category> Update(AddCategoryDto category, int Id)
         {
-            var result = await appDbContext.Brand.FirstOrDefaultAsync(br => br.Id == Id);
+            var result = await appDbContext.Category.FirstOrDefaultAsync(br => br.Id == Id);
 
             if (result != null)
             {
-                //result.Id = brand.Id;
-                result.Name = brand.Name;
+
+                result.Name = category.Name;
+                result.Category_Image = category.Category_Image;
                 await appDbContext.SaveChangesAsync();
                 return result;
             }
 
             return null;
         }
-        public async Task<Brand> Delete(int id)
+        public async Task<Category> Delete(int id)
         {
-            var result = await appDbContext.Brand.FirstOrDefaultAsync(br => br.Id == id);
+            var result = await appDbContext.Category.FirstOrDefaultAsync(br => br.Id == id);
             if (result != null)
             {
                 result.IsDeleted = true;

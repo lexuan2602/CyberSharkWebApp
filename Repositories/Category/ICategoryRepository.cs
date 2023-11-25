@@ -1,14 +1,15 @@
 ﻿
 using TEST_CRUD.DTO;
+using TEST_CRUD.DTO.CategoryDTO;
 
 namespace TEST_CRUD
 {
     public interface ICategoryRepository
     {
-        public Task<IEnumerable<Brand>> GetList(string search, int page);
-        public Task<Brand?> GetById(int id);
-        public Task<Brand?> Add(Brand brand);
-        public Task<Brand?> Update(AddBrandDto brand, int id);
-        public Task<Brand?> Delete(int id);
+        public Task<IEnumerable<Category>> GetList(string search, int page);
+        public Task<Category?> GetById(int id);
+        public Task<Category?> Add(Category brand);
+        public Task<Category?> Update(AddCategoryDto brand, int id);
+        public Task<Category?> Delete(int id);
     }
 }

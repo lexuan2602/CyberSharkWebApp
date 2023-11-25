@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TEST_CRUD.DTO;
 using TEST_CRUD.DTO.CategoryDTO;
 using TEST_CRUD.Services;
-using TEST_CRUD.Services.Category;
+using TEST_CRUD.Services.Categories;
 
 namespace TEST_CRUD.Controllers
 {
@@ -18,7 +18,7 @@ namespace TEST_CRUD.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ServiceResponse<GetCategoryDTO>>> GetCategoryList(string search = "", int page = 1)
+        public async Task<ActionResult<ServiceResponse<GetCategoryDto>>> GetCategoryList(string search = "", int page = 1)
         {
             try
             {
