@@ -6,7 +6,6 @@ using TEST_CRUD.Data;
 using TEST_CRUD.Repositories;
 using TEST_CRUD.Services;
 using TEST_CRUD.Services.Categories;
-using TEST_CRUD.Services.Product;
 
 var builder = WebApplication.CreateBuilder(args);
 

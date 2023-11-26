@@ -28,7 +28,7 @@ namespace TEST_CRUD.Models
 
 
         [Column("quantity")]
-        public string? Quantity { get; set; }
+        public int? Quantity { get; set; }
 
         [Column("product_images")]
         public string? Product_Images { get; set; }
