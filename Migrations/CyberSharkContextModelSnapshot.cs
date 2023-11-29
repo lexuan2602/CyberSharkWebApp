@@ -142,8 +142,8 @@ namespace TEST_CRUD.Migrations
                         .HasColumnType("longtext")
                         .HasColumnName("product_images");
 
-                    b.Property<string>("Quantity")
-                        .HasColumnType("longtext")
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int")
                         .HasColumnName("quantity");
 
                     b.Property<double?>("Sale_Price")

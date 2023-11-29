@@ -6,6 +6,7 @@ using TEST_CRUD.Data;
 using TEST_CRUD.Repositories;
 using TEST_CRUD.Services;
 using TEST_CRUD.Services.Categories;
+using TEST_CRUD.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,7 @@ builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 // Đăng ký dịch vụ phân quyền
 builder.Services.AddAuthorization();

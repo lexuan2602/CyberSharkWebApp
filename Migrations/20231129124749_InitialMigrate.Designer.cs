@@ -11,8 +11,8 @@ using TEST_CRUD.Data;
 namespace TEST_CRUD.Migrations
 {
     [DbContext(typeof(CyberSharkContext))]
-    [Migration("20231124081451_Initial")]
-    partial class Initial
+    [Migration("20231129124749_InitialMigrate")]
+    partial class InitialMigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,8 +145,8 @@ namespace TEST_CRUD.Migrations
                         .HasColumnType("longtext")
                         .HasColumnName("product_images");
 
-                    b.Property<string>("Quantity")
-                        .HasColumnType("longtext")
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int")
                         .HasColumnName("quantity");
 
                     b.Property<double?>("Sale_Price")

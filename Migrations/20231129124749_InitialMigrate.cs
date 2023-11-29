@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace TEST_CRUD.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialMigrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -84,7 +84,7 @@ namespace TEST_CRUD.Migrations
                     cost_price = table.Column<double>(type: "double", nullable: true),
                     sale_price = table.Column<double>(type: "double", nullable: true),
                     description = table.Column<string>(type: "longtext", nullable: true),
-                    quantity = table.Column<string>(type: "longtext", nullable: true),
+                    quantity = table.Column<int>(type: "int", nullable: true),
                     product_images = table.Column<string>(type: "longtext", nullable: true),
                     category_id = table.Column<int>(type: "int", nullable: false),
                     brand_id = table.Column<int>(type: "int", nullable: false),
