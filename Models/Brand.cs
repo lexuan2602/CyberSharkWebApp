@@ -14,7 +14,7 @@ namespace TEST_CRUD.Models
         [Required(ErrorMessage = "Name is required")]
         [StringLength(100, MinimumLength = 6, ErrorMessage = "Name must be between 6 and 100 characters")]
         [Column("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
         [Required(ErrorMessage = "Name is required")]
         [Column("brand_image")]
         public string? Brand_Image { get; set; }
@@ -23,10 +23,10 @@ namespace TEST_CRUD.Models
         public DateTime? Date_Deleted { get; set; }
 
         [Column("date_created")]
-        public DateTime Date_Created { get; set; }
+        public DateTime Date_Created { get; set; } = DateTime.Now;
 
         [Column("date_modied")]
-        public DateTime Date_Modified { get; set; }
+        public DateTime Date_Modified { get; set; } = DateTime.Now;
         public ICollection<Product> Products { get; set; }
     }
 }

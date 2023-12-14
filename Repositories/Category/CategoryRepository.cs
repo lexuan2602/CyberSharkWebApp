@@ -47,7 +47,7 @@ namespace TEST_CRUD
             {
 
                 result.Name = category.Name;
-                result.Category_Image = category.Category_Image;
+                result.Category_Images = category.Category_Images;
                 await appDbContext.SaveChangesAsync();
                 return result;
             }

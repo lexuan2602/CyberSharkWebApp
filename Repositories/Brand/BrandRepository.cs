@@ -14,7 +14,7 @@ namespace TEST_CRUD
         {
             this.appDbContext = appDbContext;
         }
-        public async Task<IEnumerable<Brand?>> GetList(string search, int page)
+        public async Task<IEnumerable<Brand?>> GetList(string search)
         {
             var brandList = appDbContext.Brand.AsQueryable();
             //// Filter Items has been Deleted /////////////////////
@@ -25,9 +25,9 @@ namespace TEST_CRUD
             {
                 brandList = brandList.Where(b => b.Name == search);
             }
-            var pageResult = 2f;  // The number of items in a page
-            var pageCount = Math.Ceiling(brandList.Count() / pageResult); // The number of items
-            brandList = brandList.Skip((page - 1) * (int) pageResult).Take((int)pageResult);
+            //var pageResult = 2f;  // The number of items in a page
+            //var pageCount = Math.Ceiling(brandList.Count() / pageResult); // The number of items
+            //brandList = brandList.Skip((page - 1) * (int) pageResult).Take((int)pageResult);
             return await brandList.ToListAsync();
         }
         public async Task<Brand> GetById(int id)
