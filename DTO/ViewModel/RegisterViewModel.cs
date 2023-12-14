@@ -20,10 +20,11 @@ namespace TEST_CRUD.ViewModel
         [Required(ErrorMessage = "Phone is a required field.")]
         public string? So_dien_thoai { get; set; } = "";
 
+        public DateTime? Date_Of_Birth { get; set; }
         public string? Hinhanh { get; set; } = "";
-
+        public string? Sex { get; set; } = "";
         public string? Role { get; set; } = "user";
-
+        
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }

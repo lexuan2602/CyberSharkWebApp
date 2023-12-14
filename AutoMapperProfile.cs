@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using TEST_CRUD.DTO;
+using TEST_CRUD.DTO.AddressDTO;
 using TEST_CRUD.DTO.CategoryDTO;
+using TEST_CRUD.DTO.CustomerDTO;
 using TEST_CRUD.DTO.ProductDTO;
 
 namespace TEST_CRUD
@@ -15,6 +17,10 @@ namespace TEST_CRUD
             CreateMap<AddCategoryDto, Category>();
             CreateMap<Product, GetProductDto>();
             CreateMap<AddProductDto, Product>();
+            CreateMap<Customer, GetCustomerDto>();
+            CreateMap<AddCustomerDto, Customer>();
+            CreateMap<Address, GetAddressDto>();
+            CreateMap<AddAddressDto, Address>();
 
         }
     }

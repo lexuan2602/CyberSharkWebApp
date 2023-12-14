@@ -2,7 +2,8 @@
 {
     public class GetCategoryDto
     {
+        public int Id { get; set; }
         public string? Name { get; set; }
-        public string? Category_Image { get; set; }
+        public string? Category_Images { get; set; }
     }
 }

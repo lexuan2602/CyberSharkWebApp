@@ -4,8 +4,16 @@ using Microsoft.EntityFrameworkCore;
 using TEST_CRUD;
 using TEST_CRUD.Data;
 using TEST_CRUD.Repositories;
+using TEST_CRUD.Repositories.Carts;
+using TEST_CRUD.Repositories.Customers;
+using TEST_CRUD.Repositories.Payments;
 using TEST_CRUD.Services;
+using TEST_CRUD.Services.Addresses;
+using TEST_CRUD.Services.Carts;
 using TEST_CRUD.Services.Categories;
+using TEST_CRUD.Services.Customers;
+using TEST_CRUD.Services.Orders;
+using TEST_CRUD.Services.Payments;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,12 +31,31 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 
+//////////////////////////// Brand //////////////////////////
 builder.Services.AddTransient<IBrandService, BrandService>();
 builder.Services.AddTransient<IBrandRepository, BrandRepository>();
+//////////////////////////// Product //////////////////////////
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
+//////////////////////////// Category //////////////////////////
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+//////////////////////////// Customer //////////////////////////
+builder.Services.AddTransient<ICustomerService, CustomerService>();
+builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
+//////////////////////////// Cart //////////////////////////
+builder.Services.AddTransient<ICartService, CartService>();
+builder.Services.AddTransient<ICartRepository, CartRepository>();
+//////////////////////////// Address //////////////////////////
+builder.Services.AddTransient<IAddressService, AddressService>();
+builder.Services.AddTransient<IAddressRepository, AddressRepository>();
+//////////////////////////// Order //////////////////////////
+builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IOrderRepository, OrderRepository>();
+//////////////////////////// Payment //////////////////////////
+builder.Services.AddTransient<IPaymentService, PaymentService>();
+builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
+//////////////////////////// User //////////////////////////
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 

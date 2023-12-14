@@ -36,7 +36,7 @@ namespace TEST_CRUD.Services
         }
         public async Task<ServiceResponse<IEnumerable<GetBrandDto?>>> GetList(string search, int page)
         {
-            var brandList = await _repo.GetList(search, page);
+            var brandList = await _repo.GetList(search);
             ServiceResponse<IEnumerable<GetBrandDto>> response = new ServiceResponse<IEnumerable<GetBrandDto>>();
             response.Data = brandList.Select(c => _mapper.Map<GetBrandDto>(c)).ToList();
             if (response.Data != null)
@@ -57,7 +57,7 @@ namespace TEST_CRUD.Services
         {
             //if (brand == null) return null;
             var mapBrand = _mapper.Map<Brand>(brand);
-            var checkName = await _repo.GetList(mapBrand.Name,1);
+            var checkName = await _repo.GetList(mapBrand.Name);
             ServiceResponse<GetBrandDto> response = new ServiceResponse<GetBrandDto>();
 
             if (checkName.Count() > 0)

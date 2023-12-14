@@ -96,9 +96,9 @@ namespace TEST_CRUD.Controllers
 
         }
         [HttpDelete]
-        public async Task<ActionResult<ServiceResponse<GetProductDto>>> DeleteProduct(int categoryId)
+        public async Task<ActionResult<ServiceResponse<GetProductDto>>> DeleteProduct(int productId)
         {
-            var result = await productService.Delete(categoryId);
+            var result = await productService.Delete(productId);
             if (result.Success)
             {
                 return Ok(result);

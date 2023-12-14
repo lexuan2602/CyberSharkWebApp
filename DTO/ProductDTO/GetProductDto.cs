@@ -2,6 +2,7 @@
 {
     public class GetProductDto
     {
+        public int Id { get; set; } 
         public string? Name { get; set; }
         public double? Cost_Price { get; set; }
         public double? Sale_Price { get; set; }
