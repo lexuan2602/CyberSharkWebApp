@@ -133,5 +133,21 @@ namespace TEST_CRUD.Repositories
         {
             return hashedPassword == HashPassword(enteredPassword);
         }
+
+        public async Task<bool> ResetPassword(string email, string newPassword)
+        {
+            // Find the user by email
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user != null)
+            {
+                // Update the user's password
+                user.Mat_khau = HashPassword(newPassword);
+                await _context.SaveChangesAsync();
+                return true; // Password reset successful
+            }
+
+            return false; // User not found
+        }
     }
 }

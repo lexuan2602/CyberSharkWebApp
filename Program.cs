@@ -11,6 +11,7 @@ using TEST_CRUD.Services;
 using TEST_CRUD.Services.Addresses;
 using TEST_CRUD.Services.Carts;
 using TEST_CRUD.Services.Categories;
+using TEST_CRUD.Services.Users;
 using TEST_CRUD.Services.Customers;
 using TEST_CRUD.Services.Orders;
 using TEST_CRUD.Services.Payments;
@@ -58,6 +59,7 @@ builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
 //////////////////////////// User //////////////////////////
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 // Đăng ký dịch vụ phân quyền
 builder.Services.AddAuthorization();

@@ -11,5 +11,6 @@ namespace TEST_CRUD.Repositories
             public Task<User?> GetByUsername(string username);
             public Task<User?> Create(RegisterViewModel registerViewModel);
             public Task<string> Login(LoginViewModel loginViewModel);
-     }
+            public Task<bool> ResetPassword(string email, string newPassword);
+    }
 }
