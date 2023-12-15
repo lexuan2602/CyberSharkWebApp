@@ -43,6 +43,8 @@ namespace TEST_CRUD.Repositories
                     };
                     resultList.Add(addProduct);
                     cartDetail.RemoveAt(productIndex);
+                    cart.Cart_Number_Item -= addProduct.Quantity;
+                    cart.Cart_Total -= addProduct.Price * addProduct.Quantity;
                     orderCost += addProduct.Price * addProduct.Quantity;
 
                 }

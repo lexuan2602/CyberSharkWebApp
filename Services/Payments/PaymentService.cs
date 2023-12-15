@@ -60,7 +60,27 @@ namespace TEST_CRUD.Services.Payments
             throw new NotImplementedException();
         }
 
-        
-        
+        public async Task<ServiceResponse<GetPaymentDto?>> UpdatePaymentVnPay(VnpayReturn vnpay)
+        {
+            var getPayment = await _repo.UpdatePaymentVnPay(vnpay);
+            ServiceResponse<GetPaymentDto> response = new ServiceResponse<GetPaymentDto>();
+            response.Data = _mapper.Map<GetPaymentDto?>(getPayment);
+            if (response.Data != null)
+            {
+                response.Success = true;
+                response.Message = "Success";
+
+            }
+            else
+            {
+                response.Success = false;
+                response.Message = "Failed";
+            }
+            return response;
+            throw new NotImplementedException();
+        }
+
+
+
     }
 }

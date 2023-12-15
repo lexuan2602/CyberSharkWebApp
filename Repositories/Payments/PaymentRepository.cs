@@ -56,14 +56,16 @@ namespace TEST_CRUD.Repositories.Payments
 
         public async Task<Payment?> GetByOrderId(string orderNumber)
         {
+            /// test
             return await appDbContext.Payment.Where(b => b.IsDeleted == false).FirstOrDefaultAsync(p => p.Order_Number == orderNumber);
            
         }
 
-        public async Task<bool> UpdatePaymentVNPay(string orderNumber)
+        public async Task<bool> UpdatePaymentVnPay(VnpayReturn vnpay)
         {
-            var result = await appDbContext.Payment.FirstOrDefaultAsync(od => od.Order_Number == orderNumber);
+            var result = await appDbContext.Payment.FirstOrDefaultAsync(od => od.Order_Number == vnpay.vnp_OrderInfo);
             result.Status = "Paid";
+            await appDbContext.SaveChangesAsync();
             throw new NotImplementedException();
         }
     }
