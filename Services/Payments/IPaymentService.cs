@@ -7,5 +7,6 @@ namespace TEST_CRUD.Services.Payments
     {
         Task<ServiceResponse<GetPaymentDto?>> GetByOrderId(string orderId);
         Task<ServiceResponse<GetPaymentDto?>> Add(AddPaymentDto payment);
+        public Task<ServiceResponse<GetPaymentDto?>> UpdatePaymentVnPay(VnpayReturn vnpay);
     }
 }

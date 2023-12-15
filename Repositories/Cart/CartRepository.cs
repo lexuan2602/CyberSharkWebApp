@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using TEST_CRUD.Data;
 using TEST_CRUD.DTO.CartDTO;
+using TEST_CRUD.DTO.OrderDTO;
 using TEST_CRUD.Models;
 
 namespace TEST_CRUD.Repositories.Carts
@@ -78,6 +79,23 @@ namespace TEST_CRUD.Repositories.Carts
                 Cart_Total = customerCart.Cart_Total,
             };
         }
+        public async Task<GetCartDto?> GetByCustomerId(int customerid)
+        {
+            var customerCart = await appDbContext.Cart.FirstOrDefaultAsync(od => od.Id == customerid);
+
+            if (customerCart == null)
+            {
+                return null;
+            }
+            return new GetCartDto()
+            {
+                Id = customerCart.Id,
+                Customer_Id = customerCart.Customer_Id,
+                Cart_Detail = customerCart.Cart_Detail,
+                Cart_Number_Item = customerCart.Cart_Number_Item,
+                Cart_Total = customerCart.Cart_Total,
+            };
+        }
         public async Task<GetCartDto?> UpdateCart(AddCartDto cart)
         {
             // lay thong tin san pham
@@ -139,6 +157,7 @@ namespace TEST_CRUD.Repositories.Carts
                 Cart_Total = customerCart.Cart_Total
             };
         }
+      
         public async Task<GetCartDto?> GetCart(int customerId)
         {
             var cart = await appDbContext.Cart.FirstOrDefaultAsync(c => c.Customer_Id == customerId);

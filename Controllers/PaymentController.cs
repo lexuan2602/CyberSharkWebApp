@@ -19,6 +19,27 @@ namespace TEST_CRUD.Controllers
 
        
  
+        [HttpGet]
+        [Route("vnpay_return")]
+        public async Task<ActionResult<ServiceResponse<GetPaymentDto>>> VnPayReturn(VnpayReturn vnpay)
+        {
+            try
+            {
+                var result = await _paymentService.UpdatePaymentVnPay(vnpay);
+                if (result.Success)
+                {
+                    return Ok(result);
+                }
+
+                return BadRequest(result.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
+
         [HttpGet("{orderId}")]
         public async Task<ActionResult<ServiceResponse<GetPaymentDto>>> GetByOrderNumber(string orderNumbber)
         {
