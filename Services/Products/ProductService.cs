@@ -52,6 +52,63 @@ namespace TEST_CRUD.Services
             return response;
 
         }
+        public async Task<ServiceResponse<IEnumerable<GetProductDto?>>> SortFromHighToLow(string direction)
+        {
+            var productList = await _repo.SortFromHighToLow(direction);
+            ServiceResponse<IEnumerable<GetProductDto>> response = new ServiceResponse<IEnumerable<GetProductDto>>();
+            response.Data = productList.Select(c => _mapper.Map<GetProductDto>(c)).ToList();
+            if (response.Data != null)
+            {
+                response.Success = true;
+                response.Message = "Success";
+
+            }
+            else
+            {
+                response.Success = false;
+                response.Message = "Failed";
+            }
+            return response;
+
+        }
+        public async Task<ServiceResponse<IEnumerable<GetProductDto?>>> GetInRange(double top, double down)
+        {
+            var productList = await _repo.GetInRange(top, down);
+            ServiceResponse<IEnumerable<GetProductDto>> response = new ServiceResponse<IEnumerable<GetProductDto>>();
+            response.Data = productList.Select(c => _mapper.Map<GetProductDto>(c)).ToList();
+            if (response.Data != null)
+            {
+                response.Success = true;
+                response.Message = "Success";
+
+            }
+            else
+            {
+                response.Success = false;
+                response.Message = "Failed";
+            }
+            return response;
+
+        }
+        public async Task<ServiceResponse<IEnumerable<GetProductDto?>>> GetByCategory(int categoryId)
+        {
+            var productList = await _repo.GetByCategory(categoryId);
+            ServiceResponse<IEnumerable<GetProductDto>> response = new ServiceResponse<IEnumerable<GetProductDto>>();
+            response.Data = productList.Select(c => _mapper.Map<GetProductDto>(c)).ToList();
+            if (response.Data != null)
+            {
+                response.Success = true;
+                response.Message = "Success";
+
+            }
+            else
+            {
+                response.Success = false;
+                response.Message = "Failed";
+            }
+            return response;
+
+        }
         public async Task<ServiceResponse<GetProductDto>> Add(AddProductDto product)
         {
             //if (product == null) return null;

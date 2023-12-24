@@ -7,7 +7,6 @@ namespace TEST_CRUD.DTO.PaymentDTO
     {
 
         public int Customer_Id { get; set; }
-        public int Order_Id { get; set; }
         public string Type { get; set; }
         public double? Amount { get; set; }
  

@@ -154,6 +154,15 @@ namespace TEST_CRUD.Repositories
             {
                 return null;
             }
+            if(order.Status != "On Delivery" && status == "Cancel")
+            {
+                List<GetProductOrderDto> resultList = JsonConvert.DeserializeObject<List<GetProductOrderDto>>(order.Order_Detail);
+                foreach (var item in resultList)
+                {
+                    var productItem = await appDbContext.Product.FirstOrDefaultAsync(p => p.Id == item.Product_Id);
+                    productItem.Quantity += item.Quantity;
+                }
+            }
             order.Status = status;
             await appDbContext.SaveChangesAsync();
             //return order;

@@ -1,28 +1,28 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TEST_CRUD.DTO;
-using TEST_CRUD.DTO.AddressDTO;
+using TEST_CRUD.DTO.BlogDTO;
 using TEST_CRUD.Services;
-using TEST_CRUD.Services.Addresses;
+using TEST_CRUD.Services.Blogs;
 
 namespace TEST_CRUD.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddresssController : ControllerBase
+    public class BlogController : ControllerBase
     {
-        private readonly IAddressService _addressService;
-        public AddresssController(IAddressService addressService)
+        private readonly IBlogService _blogService;
+        public BlogController(IBlogService blogService)
         {
-            _addressService = addressService;
+            _blogService = blogService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<ServiceResponse<GetAddressDto>>> GetAddressList()
+        public async Task<ActionResult<ServiceResponse<GetBlogDto>>> GetBlogList(string search = "", int page = 1)
         {
             try
             {
-                var result = await _addressService.GetList();
+                var result = await _blogService.GetList(search, page);
                 if (result.Success)
                 {
                     return Ok(result);
@@ -37,11 +37,11 @@ namespace TEST_CRUD.Controllers
             }
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<GetAddressDto>>> GetSingle(int id)
+        public async Task<ActionResult<ServiceResponse<GetBlogDto>>> GetSingle(int id)
         {
             try
             {
-                var result = await _addressService.GetById(id);
+                var result = await _blogService.GetById(id);
                 if (result.Success)
                 {
                     return Ok(result);
@@ -56,11 +56,11 @@ namespace TEST_CRUD.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<GetAddressDto>>> AddAddress(AddAddressDto Address)
+        public async Task<ActionResult<ServiceResponse<GetBlogDto>>> AddBlog(AddBlogDto blog)
         {
             try
             {
-                var result = await _addressService.Add(Address);
+                var result = await _blogService.Add(blog);
                 if (result.Success)
                 {
                     return Ok(result);
@@ -76,11 +76,11 @@ namespace TEST_CRUD.Controllers
             }
         }
         [HttpPut]
-        public async Task<ActionResult<ServiceResponse<GetAddressDto>>> UpdateCharacter(AddAddressDto updatedCharacter, int id)
+        public async Task<ActionResult<ServiceResponse<GetBlogDto>>> UpdateCharacter(AddBlogDto updatedCharacter, int id)
         {
             try
             {
-                var result = await _addressService.Update(updatedCharacter, id);
+                var result = await _blogService.Update(updatedCharacter, id);
                 if (result.Success)
                 {
                     return Ok(result);
@@ -97,9 +97,9 @@ namespace TEST_CRUD.Controllers
 
         }
         [HttpDelete]
-        public async Task<ActionResult<ServiceResponse<GetAddressDto>>> DeleteAddress(int AddressId)
+        public async Task<ActionResult<ServiceResponse<GetBlogDto>>> DeleteBlog(int blogId)
         {
-            var result = await _addressService.Delete(AddressId);
+            var result = await _blogService.Delete(blogId);
             if (result.Success)
             {
                 return Ok(result);

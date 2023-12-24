@@ -30,6 +30,51 @@ namespace TEST_CRUD.Repositories
             return await productList.ToListAsync();
         }
 
+        public async Task<IEnumerable<Product?>> SortFromHighToLow(string direction)
+        {
+            var productList = appDbContext.Product.AsQueryable();
+            //// Filter Items has been Deleted /////////////////////
+            productList = productList.Where(b => b.IsDeleted != true);
+
+            //////// Sort /////////////////////////
+            if(direction == "asc")
+            {
+                productList = productList.OrderBy(b => b.Sale_Price);
+
+            }
+            else
+            {
+                productList = productList.OrderByDescending(b => b.Sale_Price);
+            }
+
+
+            return await productList.ToListAsync();
+        }
+        public async Task<IEnumerable<Product?>> GetInRange(double top, double down)
+        {
+            var productList = appDbContext.Product.AsQueryable();
+            //// Filter Items has been Deleted /////////////////////
+            productList = productList.Where(b => b.IsDeleted != true);
+
+            //////// Sort /////////////////////////
+            
+            productList = productList.Where(b => (b.Sale_Price >= down && b.Sale_Price <= top));
+
+            return await productList.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product?>> GetByCategory(int categoryId)
+        {
+            var productList = appDbContext.Product.AsQueryable();
+            //// Filter Items has been Deleted /////////////////////
+            productList = productList.Where(b => b.IsDeleted != true);
+
+            //////// GetByCategory /////////////////////////
+
+            productList = productList.Where(b => b.Category_Id == categoryId);
+
+            return await productList.ToListAsync();
+        }
         public async Task<Product> GetById(int id)
         {
             return await appDbContext.Product.Where(b => b.IsDeleted == false).FirstOrDefaultAsync(br => br.Id == id);

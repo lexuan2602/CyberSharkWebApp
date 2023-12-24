@@ -9,6 +9,10 @@ namespace TEST_CRUD.Repositories.Payments
     public class PaymentRepository : IPaymentRepository
     {
         private readonly CyberSharkContext appDbContext;
+        public PaymentRepository(CyberSharkContext appDbContext)
+        {
+            this.appDbContext = appDbContext;
+        }
         public async Task<Payment?> Add(Payment payment)
         {
             payment.Payment_Id = "PM" + DateTime.Now.Ticks.ToString();
@@ -18,7 +22,7 @@ namespace TEST_CRUD.Repositories.Payments
             payment.Status = "Unpaid";
             if (payment.Type == "VnPay")
             {
-                string vnp_Returnurl = "http://localhost:7255/vnpay_return"; //URL nhan ket qua tra ve 
+                string vnp_Returnurl = "https://localhost:7226/api/Payment/vnpay_return"; //URL nhan ket qua tra ve 
                 string vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"; //URL thanh toan cua VNPAY 
                 string vnp_TmnCode = "KD7TU78B"; //Ma website
                 string vnp_HashSecret = "FVJVBAWVSSDRXZOETVFTWWQNOKMREOVP"; //Chuoi bi mat
@@ -51,6 +55,7 @@ namespace TEST_CRUD.Repositories.Payments
                 payment.Payment_Url = vnpay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
             }
             var addPayment = await appDbContext.Payment.AddAsync(payment);
+            await appDbContext.SaveChangesAsync();
             return addPayment.Entity;
         }
 
@@ -61,12 +66,14 @@ namespace TEST_CRUD.Repositories.Payments
            
         }
 
-        public async Task<bool> UpdatePaymentVnPay(VnpayReturn vnpay)
+        public async Task<Payment> UpdatePaymentVnPay(VnpayReturn vnpay)
         {
-            var result = await appDbContext.Payment.FirstOrDefaultAsync(od => od.Order_Number == vnpay.vnp_OrderInfo);
+            var result = await appDbContext.Payment.FirstOrDefaultAsync(od => od.Order_Number == vnpay.vnp_TxnRef);
+            var updateOrder = await appDbContext.Order.FirstOrDefaultAsync(od => od.Order_Number == vnpay.vnp_TxnRef);
             result.Status = "Paid";
+            updateOrder.Status = "Paid";
             await appDbContext.SaveChangesAsync();
-            throw new NotImplementedException();
+            return result;
         }
     }
 }

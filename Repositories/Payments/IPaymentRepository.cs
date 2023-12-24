@@ -7,7 +7,7 @@ namespace TEST_CRUD.Repositories.Payments
         public Task<Payment?> GetByOrderId(string order_id);
         public Task<Payment?> Add(Payment payment);
 
-        public Task<bool> UpdatePaymentVnPay(VnpayReturn vnpay);
+        public Task<Payment> UpdatePaymentVnPay(VnpayReturn vnpay);
         
     }
 }
