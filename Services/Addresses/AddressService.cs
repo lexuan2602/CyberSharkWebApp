@@ -32,9 +32,9 @@ namespace TEST_CRUD.Services.Addresses
             }
             return response;
         }
-        public async Task<ServiceResponse<IEnumerable<GetAddressDto?>>> GetList(int page)
+        public async Task<ServiceResponse<IEnumerable<GetAddressDto?>>> GetList()
         {
-            var addressList = await _repo.GetList(page);
+            var addressList = await _repo.GetList();
             ServiceResponse<IEnumerable<GetAddressDto>> response = new ServiceResponse<IEnumerable<GetAddressDto>>();
             response.Data = addressList.Select(c => _mapper.Map<GetAddressDto>(c)).ToList();
             if (response.Data != null)

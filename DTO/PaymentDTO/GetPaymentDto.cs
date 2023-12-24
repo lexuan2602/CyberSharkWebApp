@@ -7,9 +7,10 @@ namespace TEST_CRUD.DTO.PaymentDTO
     {
         public string Payment_Id { get; set; }
         public int Customer_Id { get; set; }
-        public int Order_Id { get; set; }
+        public string Order_Number { get; set; }
         public string Type { get; set; }
         public double? Amount { get; set; }
         public string? Status { get; set; }
+        public string? Payment_Url { get; set; }
     }
 }

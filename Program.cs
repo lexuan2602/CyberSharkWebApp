@@ -15,6 +15,10 @@ using TEST_CRUD.Services.Users;
 using TEST_CRUD.Services.Customers;
 using TEST_CRUD.Services.Orders;
 using TEST_CRUD.Services.Payments;
+using TEST_CRUD.Services.Blogs;
+using TEST_CRUD.Services.Reviews;
+using TEST_CRUD.Services.Vouchers;
+using TEST_CRUD.Repositories.Vouchers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +64,15 @@ builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IEmailService, EmailService>();
+//////////////////////////// Blog //////////////////////////
+builder.Services.AddTransient<IBlogService, BlogService>();
+builder.Services.AddTransient<IBlogRepository, BlogRepository>();
+//////////////////////////// Review //////////////////////////
+builder.Services.AddTransient<IReviewService, ReviewService>();
+builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
+//////////////////////////// Voucher //////////////////////////
+builder.Services.AddTransient<IVoucherService, VoucherService>();
+builder.Services.AddTransient<IVoucherRepository, VoucherRepository>();
 
 // Đăng ký dịch vụ phân quyền
 builder.Services.AddAuthorization();
