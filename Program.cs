@@ -64,6 +64,24 @@ builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IEmailService, EmailService>();
+
+/////////////////////////// SignalR ////////////////////////
+builder.Services.AddSignalR();
+/*builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:7226")
+                .AllowAnyHeader()
+                .WithMethods("GET", "POST")
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials();
+        });
+});*/
+
+/////////////////////////// SignalR ////////////////////////
+
 //////////////////////////// Blog //////////////////////////
 builder.Services.AddTransient<IBlogService, BlogService>();
 builder.Services.AddTransient<IBlogRepository, BlogRepository>();
@@ -73,6 +91,7 @@ builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
 //////////////////////////// Voucher //////////////////////////
 builder.Services.AddTransient<IVoucherService, VoucherService>();
 builder.Services.AddTransient<IVoucherRepository, VoucherRepository>();
+
 
 // Đăng ký dịch vụ phân quyền
 builder.Services.AddAuthorization();
