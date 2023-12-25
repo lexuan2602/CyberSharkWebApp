@@ -15,6 +15,7 @@ using TEST_CRUD.Services.Users;
 using TEST_CRUD.Services.Customers;
 using TEST_CRUD.Services.Orders;
 using TEST_CRUD.Services.Payments;
+using TEST_CRUD.Services.ChatHub;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +61,22 @@ builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IEmailService, EmailService>();
+/////////////////////////// SignalR ////////////////////////
+builder.Services.AddSignalR();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:7226")
+                .AllowAnyHeader()
+                .WithMethods("GET", "POST")
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials();
+        });
+});
+
+/////////////////////////// SignalR ////////////////////////
 
 // Đăng ký dịch vụ phân quyền
 builder.Services.AddAuthorization();
@@ -72,12 +89,24 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(x => x
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .SetIsOriginAllowed(origin => true) // allow any origin
+        .AllowCredentials()); // allow credentials
+
+     app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.UseHttpsRedirection();
 
