@@ -1,28 +1,28 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TEST_CRUD.DTO;
-using TEST_CRUD.DTO.AddressDTO;
+using TEST_CRUD.DTO.ReviewDTO;
 using TEST_CRUD.Services;
-using TEST_CRUD.Services.Addresses;
+using TEST_CRUD.Services.Reviews;
 
 namespace TEST_CRUD.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddresssController : ControllerBase
+    public class ReviewController : ControllerBase
     {
-        private readonly IAddressService _addressService;
-        public AddresssController(IAddressService addressService)
+        private readonly IReviewService _reviewService;
+        public ReviewController(IReviewService reviewService)
         {
-            _addressService = addressService;
+            _reviewService = reviewService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<ServiceResponse<GetAddressDto>>> GetAddressList()
+        public async Task<ActionResult<ServiceResponse<GetReviewDto>>> GetReviewList()
         {
             try
             {
-                var result = await _addressService.GetList();
+                var result = await _reviewService.GetList();
                 if (result.Success)
                 {
                     return Ok(result);
@@ -37,11 +37,11 @@ namespace TEST_CRUD.Controllers
             }
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<GetAddressDto>>> GetSingle(int id)
+        public async Task<ActionResult<ServiceResponse<GetReviewDto>>> GetSingle(int id)
         {
             try
             {
-                var result = await _addressService.GetById(id);
+                var result = await _reviewService.GetById(id);
                 if (result.Success)
                 {
                     return Ok(result);
@@ -56,11 +56,11 @@ namespace TEST_CRUD.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<GetAddressDto>>> AddAddress(AddAddressDto Address)
+        public async Task<ActionResult<ServiceResponse<GetReviewDto>>> AddReview(AddReviewDto review)
         {
             try
             {
-                var result = await _addressService.Add(Address);
+                var result = await _reviewService.Add(review);
                 if (result.Success)
                 {
                     return Ok(result);
@@ -76,11 +76,11 @@ namespace TEST_CRUD.Controllers
             }
         }
         [HttpPut]
-        public async Task<ActionResult<ServiceResponse<GetAddressDto>>> UpdateCharacter(AddAddressDto updatedCharacter, int id)
+        public async Task<ActionResult<ServiceResponse<GetReviewDto>>> UpdateCharacter(AddReviewDto updatedReview, int id)
         {
             try
             {
-                var result = await _addressService.Update(updatedCharacter, id);
+                var result = await _reviewService.Update(updatedReview, id);
                 if (result.Success)
                 {
                     return Ok(result);
@@ -97,9 +97,9 @@ namespace TEST_CRUD.Controllers
 
         }
         [HttpDelete]
-        public async Task<ActionResult<ServiceResponse<GetAddressDto>>> DeleteAddress(int AddressId)
+        public async Task<ActionResult<ServiceResponse<GetReviewDto>>> DeleteReview(int reviewId)
         {
-            var result = await _addressService.Delete(AddressId);
+            var result = await _reviewService.Delete(reviewId);
             if (result.Success)
             {
                 return Ok(result);

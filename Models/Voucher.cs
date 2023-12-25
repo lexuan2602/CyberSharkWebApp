@@ -21,8 +21,18 @@ namespace TEST_CRUD.Models
         [Column("percent")]
         public double Percent { get; set; }
 
+        [Column("date_start")]
+        public DateTime? Date_Start { get; set; }
+
+
         [Column("date_expired")]
         public DateTime? Date_Expired { get; set; }
+
+        [Column("used_number")]
+        public int Used_Number { get; set; }
+
+        [Column("max_used_number")]
+        public int Max_Used_Number { get; set; }
 
         [Column("date_deleted")]
         public DateTime? Date_Deleted { get; set; }

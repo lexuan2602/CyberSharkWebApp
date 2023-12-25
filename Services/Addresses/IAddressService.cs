@@ -5,7 +5,7 @@ namespace TEST_CRUD.Services.Addresses
 {
     public interface IAddressService
     {
-        Task<ServiceResponse<IEnumerable<GetAddressDto?>>> GetList(int page);
+        Task<ServiceResponse<IEnumerable<GetAddressDto?>>> GetList();
         Task<ServiceResponse<GetAddressDto?>> GetById(int addressid);
 
         Task<ServiceResponse<GetAddressDto?>> Add(AddAddressDto address);

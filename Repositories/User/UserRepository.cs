@@ -6,11 +6,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using TEST_CRUD.Data;
-using TEST_CRUD.DTO.CustomerDTO;
-using TEST_CRUD.DTO.ViewModel;
 using TEST_CRUD.Models;
-using TEST_CRUD.Repositories.Customers;
-using TEST_CRUD.Services.Customers;
 using TEST_CRUD.ViewModel;
 
 namespace TEST_CRUD.Repositories
@@ -18,15 +14,13 @@ namespace TEST_CRUD.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly CyberSharkContext _context;
-        private readonly ICustomerService _customerService;
         private readonly IConfiguration _config;
 
-        public UserRepository(CyberSharkContext context, IConfiguration config, ICustomerService customerService)
+        public UserRepository(CyberSharkContext context, IConfiguration config)
         {
             _context = context;
             //inject config into Repo (jwt seret inside)
             _config = config;
-            _customerService = customerService;
         }
 
         public async Task<User?> GetById(int id)
@@ -58,66 +52,25 @@ namespace TEST_CRUD.Repositories
                 UpdatedAt = DateTime.UtcNow
             };
 
-            if (registerViewModel.Role == "customer")
-            {
-                // Create a new customer and associate it with the user
-                var newCustomerDto = new AddCustomerDto
-                {
-                    Name = registerViewModel.Ten,
-                    Email = registerViewModel.Email,
-                    Telephone = registerViewModel.So_dien_thoai,
-                    Customer_Images = registerViewModel.Hinhanh,
-                    Sex = registerViewModel.Sex,
-                    Date_Of_Birth = registerViewModel.Date_Of_Birth,
-                };
-
-                var customerServiceResponse = await _customerService.Add(newCustomerDto);
-
-                // Check if the customer creation was successful
-                if (!customerServiceResponse.Success)
-                {
-                    // Handle the error, for example, you can throw an exception or return an error response.
-                    throw new Exception($"Error creating customer: {customerServiceResponse.Message}");
-                }
-            }
-
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
 
             return newUser;
         }
 
-
-        public async Task<(User?, string, int)> Login(LoginViewModel loginViewModel)
+        public async Task<string> Login(LoginViewModel loginViewModel)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginViewModel.Email);
 
             if (user != null && VerifyPassword(user.Mat_khau, loginViewModel.Mat_khau))
             {
-                // Determine if the user is an admin or customer
-                var isAdmin = user.Role == "admin";
-                int id;
-
-                if (isAdmin)
-                {
-                    // Find the admin by email
-                    var admin = await _context.Administrator.FirstOrDefaultAsync(a => a.Email == user.Email);
-                    id = admin?.Id ?? 0;
-                }
-                else
-                {
-                    // Find the customer by email
-                    var customer = await _context.Customer.FirstOrDefaultAsync(c => c.Email == user.Email);
-                    id = customer?.Id ?? 0;
-                }
-
-                // Generate JWT token
-                var jwtToken = GenerateJwtToken(user);
-
-                return (user, jwtToken, id);
+                // Đăng nhập thành công, tạo JWT token
+                var token = GenerateJwtToken(user);
+                return token;
             }
 
-            return (null, null, 0); // Login failed
+            // Đăng nhập thất bại
+            throw new ArgumentException("Incorrect email or password. Please try again.");
         }
 
 

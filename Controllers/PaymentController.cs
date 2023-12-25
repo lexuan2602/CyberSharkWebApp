@@ -21,7 +21,7 @@ namespace TEST_CRUD.Controllers
  
         [HttpGet]
         [Route("vnpay_return")]
-        public async Task<ActionResult<ServiceResponse<GetPaymentDto>>> VnPayReturn(VnpayReturn vnpay)
+        public async Task<ActionResult<ServiceResponse<GetPaymentDto>>> VnPayReturn([FromQuery]VnpayReturn vnpay)
         {
             try
             {
