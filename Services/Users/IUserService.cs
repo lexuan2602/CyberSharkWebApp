@@ -6,9 +6,9 @@ namespace TEST_CRUD.Services
 {
     public interface IUserService
     {
-        Task<User?> Register(RegisterViewModel registerViewModel);
+        public Task<User?> Register(RegisterViewModel registerViewModel);
 
         //jwt String
-        Task<string> Login(LoginViewModel loginViewModel);
+        public Task<(User?, string, int)> Login(LoginViewModel loginViewModel);
     }
 }
