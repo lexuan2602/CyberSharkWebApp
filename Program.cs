@@ -1,4 +1,4 @@
-global using TEST_CRUD.Models;
+﻿global using TEST_CRUD.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using TEST_CRUD;
@@ -15,7 +15,10 @@ using TEST_CRUD.Services.Users;
 using TEST_CRUD.Services.Customers;
 using TEST_CRUD.Services.Orders;
 using TEST_CRUD.Services.Payments;
-using TEST_CRUD.Services.ChatHub;
+using TEST_CRUD.Services.Blogs;
+using TEST_CRUD.Services.Reviews;
+using TEST_CRUD.Services.Vouchers;
+using TEST_CRUD.Repositories.Vouchers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,22 +64,15 @@ builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IEmailService, EmailService>();
-/////////////////////////// SignalR ////////////////////////
-builder.Services.AddSignalR();
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        builder =>
-        {
-            builder.WithOrigins("https://localhost:7226")
-                .AllowAnyHeader()
-                .WithMethods("GET", "POST")
-                .SetIsOriginAllowed((host) => true)
-                .AllowCredentials();
-        });
-});
-
-/////////////////////////// SignalR ////////////////////////
+//////////////////////////// Blog //////////////////////////
+builder.Services.AddTransient<IBlogService, BlogService>();
+builder.Services.AddTransient<IBlogRepository, BlogRepository>();
+//////////////////////////// Review //////////////////////////
+builder.Services.AddTransient<IReviewService, ReviewService>();
+builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
+//////////////////////////// Voucher //////////////////////////
+builder.Services.AddTransient<IVoucherService, VoucherService>();
+builder.Services.AddTransient<IVoucherRepository, VoucherRepository>();
 
 // Đăng ký dịch vụ phân quyền
 builder.Services.AddAuthorization();
@@ -89,24 +85,12 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors(x => x
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        .SetIsOriginAllowed(origin => true) // allow any origin
-        .AllowCredentials()); // allow credentials
-
-     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
 }
-
-app.MapHub<ChatHub>("/chatHub");
 
 app.UseHttpsRedirection();
 

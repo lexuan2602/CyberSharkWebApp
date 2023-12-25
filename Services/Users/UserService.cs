@@ -1,6 +1,5 @@
 ﻿using TEST_CRUD.ViewModel;
 using TEST_CRUD.Repositories;
-using TEST_CRUD.DTO.ViewModel;
 
 namespace TEST_CRUD.Services
 {
@@ -36,18 +35,11 @@ namespace TEST_CRUD.Services
 
         // Other methods (e.g., CheckExistingUsername, additional business logic) can be added similarly.
 
-        public async Task<(User?, string, int)> Login(LoginViewModel loginViewModel)
+        public async Task<string> Login(LoginViewModel loginViewModel)
         {
-            var (user, jwtToken, id) = await _userRepository.Login(loginViewModel);
 
-            if (user != null && !string.IsNullOrEmpty(jwtToken))
-            {
-                return (user, jwtToken, id);
-            }
-
-            throw new ArgumentException("Incorrect email or password. Please try again.");
+            return await _userRepository.Login(loginViewModel);
         }
-
 
         private string HashPassword(string password)
         {
