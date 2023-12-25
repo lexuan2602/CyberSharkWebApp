@@ -32,6 +32,8 @@ namespace TEST_CRUD.Models
         [Column("status")]
         public string Status { get; set; } = "Unpaid";
 
+        [Column("discount_amount")]
+        public double? Discount_Amount { get; set; }
 
         [Column("date_deleted")]
         public DateTime? Date_Deleted { get; set; }

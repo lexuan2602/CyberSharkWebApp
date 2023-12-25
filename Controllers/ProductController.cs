@@ -35,6 +35,66 @@ namespace TEST_CRUD.Controllers
                     "Error retrieving data from the database");
             }
         }
+        [HttpGet]
+        [Route("sorthigh")]
+        public async Task<ActionResult<ServiceResponse<GetProductDto>>> SortFromHighToLow(string direction)
+        {
+            try
+            {
+                var result = await productService.SortFromHighToLow(direction);
+                if (result.Success)
+                {
+                    return Ok(result);
+                }
+
+                return BadRequest(result.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
+        [HttpGet]
+        [Route("sortinrange")]
+        public async Task<ActionResult<ServiceResponse<GetProductDto>>> GetInRange(double top, double down)
+        {
+            try
+            {
+                var result = await productService.GetInRange(top,down);
+                if (result.Success)
+                {
+                    return Ok(result);
+                }
+
+                return BadRequest(result.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
+        [HttpGet]
+        [Route("getcategory")]
+        public async Task<ActionResult<ServiceResponse<GetProductDto>>> GetByCategory(int categoryId)
+        {
+            try
+            {
+                var result = await productService.GetByCategory(categoryId);
+                if (result.Success)
+                {
+                    return Ok(result);
+                }
+
+                return BadRequest(result.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<GetProductDto>>> GetSingle(int id)
         {

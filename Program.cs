@@ -1,4 +1,4 @@
-﻿global using TEST_CRUD.Models;
+global using TEST_CRUD.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using TEST_CRUD;

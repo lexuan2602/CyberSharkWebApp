@@ -31,10 +31,10 @@ namespace TEST_CRUD.Models
         public double? Amount { get; set; }
 
         [Column("status")]
-        public string? Status { get; set; }
+        public string? Status { get; set; } = "Unpaid";
 
         [Column("payment_url")]
-        public string? Payment_Url { get; set; } = "Unpaid";
+        public string? Payment_Url { get; set; }
 
 
         [Column("date_deleted")]

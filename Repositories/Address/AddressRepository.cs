@@ -11,15 +11,13 @@ namespace TEST_CRUD.Repositories
         {
             this.appDbContext = appDbContext;
         }
-        public async Task<IEnumerable<Address?>> GetList(int page)
+        public async Task<IEnumerable<Address?>> GetList()
         {
             var addressList = appDbContext.Address.AsQueryable();
             //// Filter Items has been Deleted /////////////////////
             addressList = addressList.Where(b => b.IsDeleted != true);
 
-            var pageResult = 15f;  // The number of items in a page
-            var pageCount = Math.Ceiling(addressList.Count() / pageResult); // The number of items
-            addressList = addressList.Skip((page - 1) * (int)pageResult).Take((int)pageResult);
+            
             return await addressList.ToListAsync();
         }
         public async Task<Address> GetById(int id)
