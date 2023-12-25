@@ -63,7 +63,7 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 /////////////////////////// SignalR ////////////////////////
 builder.Services.AddSignalR();
-builder.Services.AddCors(options =>
+/*builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
         builder =>
@@ -74,7 +74,7 @@ builder.Services.AddCors(options =>
                 .SetIsOriginAllowed((host) => true)
                 .AllowCredentials();
         });
-});
+});*/
 
 /////////////////////////// SignalR ////////////////////////
 
