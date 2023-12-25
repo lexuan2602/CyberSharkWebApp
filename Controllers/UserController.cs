@@ -39,16 +39,10 @@ namespace TEST_CRUD.Controllers
         {
             try
             {
-                var (user, jwtToken, id) = await _userService.Login(loginViewModel);
-
-                if (user != null && !string.IsNullOrEmpty(jwtToken))
-                {
-                    return Ok(new { User = user, JwtToken = jwtToken, Id = id });
-                }
-
-                return Unauthorized(new { Message = "Incorrect email or password. Please try again." });
+                string jwtToken = await _userService.Login(loginViewModel);
+                return Ok(new { jwtToken });
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
                 return BadRequest(new { Message = ex.Message });
             }
